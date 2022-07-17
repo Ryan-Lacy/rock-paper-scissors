@@ -1,6 +1,6 @@
-function playRound(playerSelection, computerSelection) {
+function playRound(playerSelection) {
     playerSelection = playerSelection.toUpperCase();
-    computerSelection = computerSelection.toUpperCase();
+    computerSelection = computerPlay().toUpperCase();
     
     let result;
     if (playerSelection === computerSelection) {
@@ -47,4 +47,33 @@ function game() {
     }
     console.log(`The player won ${playerWins} of five rounds`);
 }
-game();
+
+// Default scores to zero
+
+
+// Event listener for each button
+const buttons = document.querySelectorAll('button');
+buttons.forEach((button) => {
+    const compAnswer = computerPlay();
+    button.addEventListener('click', () => {
+        let result = playRound(button.className,compAnswer);
+        
+        const playerResult = document.querySelector('.your-score');
+        const computerResult = document.querySelector('.computer-score');
+
+        if (result.includes("win")) {
+            playerResult.textContent++
+        }
+        else {
+            computerResult.textContent++;
+        }
+
+        if (playerResult.textContent >= 5) {
+            const totalResults = document.querySelector('.total-results');
+            totalResults.textContent = 'YOU WIN!!!!!!!';
+        } else if (computerResult.textContent >= 5) {
+            const totalResults = document.querySelector('.total-results');
+            totalResults.textContent = 'YOU LOSE';
+        }
+    })
+})
